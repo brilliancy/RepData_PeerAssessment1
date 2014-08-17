@@ -12,13 +12,6 @@ table <- read.csv("activity.csv", header=TRUE)
 
 ```r
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.1.1
-```
-
-```r
 countSteps <- aggregate(steps ~ date, table, sum)  
 ggplot(countSteps, aes(x=steps)) + geom_histogram()
 ```
@@ -134,6 +127,24 @@ date_table$dayOfWeek[weekend == TRUE] <- "weekend"
 
 weekend_table<- date_table[date_table$weekend == TRUE,]
 weekday_table<- date_table[date_table$weekend == FALSE,]
+
+mean_weekday_steps <- aggregate(steps ~ interval, weekday_table, mean)
+p1 <- ggplot(mean_weekday_steps, aes(steps, interval)) + geom_line() + ggtitle("weekday") +xlab("") + ylab("Number of Steps")
+
+
+mean_weekend_steps <- aggregate(steps ~ interval, weekend_table, mean)
+p2 <- ggplot(mean_weekend_steps, aes(steps, interval)) + geom_line() + ggtitle("weekend") + xlab("") + ylab("Number of Steps")
+library(gridExtra)
 ```
+
+```
+## Loading required package: grid
+```
+
+```r
+grid.arrange(p1,p2, ncol=1)
+```
+
+![plot of chunk unnamed-chunk-9](./PA1_template_files/figure-html/unnamed-chunk-9.png) 
 
 
