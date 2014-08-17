@@ -2,7 +2,9 @@
 title: "Peer Assessment 1"
 author: "brilliancy"
 date: "Sunday, July 20, 2014"
-output: html_document
+output:
+  html_document:
+    keep_md: yes
 ---
 ```{r set options, echo=TRUE}
 ```
@@ -75,6 +77,15 @@ date_table$dayOfWeek[weekend == TRUE] <- "weekend"
 weekend_table<- date_table[date_table$weekend == TRUE,]
 weekday_table<- date_table[date_table$weekend == FALSE,]
 
+mean_weekday_steps <- aggregate(steps ~ interval, weekday_table, mean)
+p1 <- ggplot(mean_weekday_steps, aes(steps, interval)) + geom_line() + ggtitle("weekday") +xlab("") + ylab("Number of Steps")
+
+
+mean_weekend_steps <- aggregate(steps ~ interval, weekend_table, mean)
+p2 <- ggplot(mean_weekend_steps, aes(steps, interval)) + geom_line() + ggtitle("weekend") + xlab("") + ylab("Number of Steps")
+library(gridExtra)
+grid.arrange(p1,p2, ncol=1)
+             
 ```
 
 
